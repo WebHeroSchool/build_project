@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-
 gulp.task('time', () => {
 	let today = new Date(); 
 	console.log(today);
@@ -14,3 +13,8 @@ gulp.task('cssMove', () => {
 	return gulp.src('*.css')
 		.pipe(gulp.dest('style'));
 })
+=======
+gulp.task('time', () => {
+	let today = new Date(); 
+	console.log(today);
+});
