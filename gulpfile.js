@@ -16,7 +16,5 @@ gulp.task('jsMove', () => {
 
 gulp.task('cssMove', () => {
 	return gulp.src('*.css')
-		.pipe(concat('style.css'))
-		.pipe(uglify())
 		.pipe(gulp.dest('style'));
 })
