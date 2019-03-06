@@ -47,7 +47,7 @@ gulp.task('cssMove', () => {
 		.pipe(gulp.dest(paths.build.styles));
 });
 
-gulp.task('default', ['jsMove', 'cssMove']);
+gulp.task('build', ['jsMove', 'cssMove']);
 
 gulp.task('browser-sync', () => {
     browserSync.init({
@@ -62,3 +62,6 @@ gulp.task('browser-sync', () => {
 
 gulp.task('cssMove-watch', ['cssMove'], () => browserSync.reload());
 gulp.task('jsMove-watch', ['jsMove'], () => browserSync.reload());
+
+gulp.task('dev', ['build', 'browser-sync']);
+gulp.task('prod', ['build']);
