@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
+const cssnano = require('gulp-cssnano');
 
 gulp.task('time', () => {
 	let today = new Date(); 
@@ -23,5 +24,7 @@ gulp.task('cssMove', () => {
 		.pipe(babel({
             presets: ['@babel/env']
         }))
+        .pipe(concat('style.css'))
+        .pipe(cssnano())
 		.pipe(gulp.dest('style'));
 })
