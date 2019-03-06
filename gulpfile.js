@@ -1,4 +1,7 @@
 const gulp = require('gulp');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+
 gulp.task('time', () => {
 	let today = new Date(); 
 	console.log(today);
@@ -6,6 +9,8 @@ gulp.task('time', () => {
 
 gulp.task('jsMove', () => {
 	return gulp.src('*.js')
+		.pipe(concat('index.js'))
+		.pipe(uglify())
 		.pipe(gulp.dest('script'));
 });
 
