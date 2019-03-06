@@ -27,4 +27,6 @@ gulp.task('cssMove', () => {
         .pipe(concat('style.css'))
         .pipe(cssnano())
 		.pipe(gulp.dest('style'));
-})
+});
+
+gulp.task('build', ['jsMove', 'cssMove']);
