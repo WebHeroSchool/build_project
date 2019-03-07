@@ -1,3 +1,17 @@
+:root {
+  --mainColor: #abccfc;
+}
+
 h1 {
-	color: green;
+	h2 {
+		color: var(--mainColor) #212231;
+	}
+}
+
+body {
+	background-image: resolve('1381397061_2007211227.jpg');
+}
+
+::placeholder {
+	color: grey;
 }
