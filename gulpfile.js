@@ -1,10 +1,13 @@
+const env = require('gulp-env');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
+const gulpif = require('gulp-if');
 const cssnano = require('gulp-cssnano');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
+const clean = require('gulp-clean');
 
 const paths = {
 	src: {
@@ -12,14 +15,20 @@ const paths = {
 		scripts: '*.js'
 	},
 	build: {
-		styles: 'style',
-		scripts: 'script'
+		build: 'build',
+		styles: 'build/style',
+		scripts: 'build/script'
 	},
 	buildName: {
 		styles: 'index.min.css',
 		scripts: 'index.min.js'
 	} 
 }
+
+env({
+  file: '.env',
+  type: 'ini',
+});
 
 gulp.task('time', () => {
 	let today = new Date(); 
@@ -33,7 +42,7 @@ gulp.task('jsMove', () => {
 			.pipe(babel({
 	            presets: ['@babel/env']
 	        }))
-			.pipe(uglify())
+			.pipe(gulpif(process.env.NODE_ENV === 'production', uglify()))
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest(paths.build.scripts));
 });
@@ -42,9 +51,14 @@ gulp.task('cssMove', () => {
 	return gulp.src([paths.src.styles])
 		.pipe(sourcemaps.init())
 	        .pipe(concat(paths.buildName.styles))
-	        .pipe(cssnano())
-	    .pipe(sourcemaps.write())
+	        .pipe(gulpif(process.env.NODE_ENV === 'production', cssnano()))
+	    .pipe(sourcemaps.write()) 
 		.pipe(gulp.dest(paths.build.styles));
+});
+
+gulp.task('clean', () => {
+	return gulp.src(paths.build.build, {read: false})
+        .pipe(clean());
 });
 
 gulp.task('build', ['jsMove', 'cssMove']);
