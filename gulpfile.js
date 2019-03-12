@@ -18,6 +18,8 @@ const clean = require('gulp-clean');
 const rename = require("gulp-rename");
 const handlebars = require('gulp-compile-handlebars');
 
+const templateContext = require('./templates/test.json');
+
 const paths = {
 	src: {
 		dir: 'templates',
@@ -54,7 +56,7 @@ gulp.task('compile', () => {
 				batch: files.map(item => item.slice(0, item.lastIndexOf('/')))
 			};
 			return gulp.src(`${paths.src.dir}/index.hbs`)
-				.pipe(handlebars({}, options))
+				.pipe(handlebars(templateContext, options))
 				.pipe(rename('index.html'))
 				.pipe(gulp.dest(paths.build.build));
 
