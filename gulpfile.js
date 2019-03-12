@@ -53,7 +53,17 @@ gulp.task('compile', () => {
 		if (!err) {
 			const options = {
 				ignorePartials: true,
-				batch: files.map(item => item.slice(0, item.lastIndexOf('/')))
+				batch: files.map(item => item.slice(0, item.lastIndexOf('/'))),
+				helpers: {
+					capitals: str => str[0].toUpperCase() + str.slice(1),
+					experience: (a) => {
+						if (a>18) {
+							return `${a-18} лет`;
+						} else {
+							return "Не возьму на работу"
+						}
+					}
+				}
 			};
 			return gulp.src(`${paths.src.dir}/index.hbs`)
 				.pipe(handlebars(templateContext, options))
