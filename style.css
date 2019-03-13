@@ -1,19 +1,5 @@
-:root {
-  --mainColor: #abccfc;
-}
-
-h1 {
-	h2 {
-		color: var(--mainColor) #31;
-	}
-}
-
-body {
-	background-image: resolve('1381397061_2007211227.jpg') !important;;
-}
-
 ::placeholder {
-	color: grey;
-	width: 20px;
-	height: 30px;     
+  color: grey;
+  width: 20px;
+  height: 30px;
 }

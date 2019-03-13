@@ -10,7 +10,7 @@
         "semi": "error",
         "no-empty": "error",
         "no-alert": "error",
-        "one-var": ["error", "always"],
+        "one-var": ["error", "never"],
         "max-params": ["error", 3],
         "quotes": ["error", "single"],
         "strict": ["error", "global"],
