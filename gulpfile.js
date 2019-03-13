@@ -1,6 +1,6 @@
 const env = require('gulp-env');
 const gulp = require('gulp');
-const glob = require("glob");
+const glob = require('glob');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
@@ -15,12 +15,15 @@ const cssnano = require('gulp-cssnano');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 const clean = require('gulp-clean');
-const rename = require("gulp-rename");
+const rename = require('gulp-rename');
 const handlebars = require('gulp-compile-handlebars');
 const eslint = require('gulp-eslint');
+const stylelint = require('stylelint');
+const reporter = require('postcss-reporter');
 
 const templateContext = require('./templates/test.json');
 const rulesScripts = require('./eslintrc.json');
+const rulesStyles = require('./stylelintrc.json');
 
 const paths = {
 	src: {
@@ -41,7 +44,7 @@ const paths = {
 	lint: {
 		scripts: ['*.js', '!node_modules/**/*', '!build/**/*']
 	}
-}
+};
 
 env({
   file: '.env',
@@ -65,7 +68,7 @@ gulp.task('compile', () => {
 						if (a>18) {
 							return `${a-18} лет`;
 						} else {
-							return "Не возьму на работу"
+							return 'Не возьму на работу';
 						}
 					}
 				}
@@ -76,8 +79,8 @@ gulp.task('compile', () => {
 				.pipe(gulp.dest(paths.build.build));
 
 		}
-	})
-})
+	});
+});
 
 gulp.task('jsMove', () => {
 	return gulp.src([paths.src.scripts])
@@ -132,8 +135,22 @@ gulp.task('browser-sync', () => {
 gulp.task('eslint', () => {
 	gulp.src(paths.lint.scripts)
 		.pipe (eslint(rulesScripts))
-		.pipe(eslint.format())
-})
+		.pipe(eslint.format());
+});
+
+gulp.task('stylelint', () => {
+	gulp.src(paths.src.styles)
+		.pipe(postcss([
+			stylelint(rulesStyles),
+			reporter({
+				clegarMessages:true,
+				throwError: false
+			})
+
+			]));
+});
+
+gulp.task('lint', ['eslint', 'stylelint']);
 
 gulp.task('cssMove-watch', ['cssMove'], () => browserSync.reload());
 gulp.task('jsMove-watch', ['jsMove'], () => browserSync.reload());

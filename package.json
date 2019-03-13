@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "gulp lint",
     "console": "echo hello",
     "create": "mkdir build",
     "delete": "rmdir build",
     "start": "gulp dev",
     "build": "gulp prod"
   },
+  "pre-push": [
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WebHeroSchool/build_project.git"
@@ -45,6 +48,9 @@
     "postcss-assets": "^5.0.0",
     "postcss-nested": "^4.1.2",
     "postcss-preset-env": "^6.6.0",
-    "postcss-short": "^5.0.0"
+    "postcss-reporter": "^6.0.1",
+    "postcss-short": "^5.0.0",
+    "pre-push": "^0.1.1",
+    "stylelint": "^9.10.1"
   }
 }
