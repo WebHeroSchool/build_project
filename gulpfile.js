@@ -18,9 +18,12 @@ const clean = require('gulp-clean');
 const rename = require("gulp-rename");
 const handlebars = require('gulp-compile-handlebars');
 const eslint = require('gulp-eslint');
+const stylelint = require('stylelint');
+const reporter = require('postcss-reporter');
 
 const templateContext = require('./templates/test.json');
 const rulesScripts = require('./eslintrc.json');
+const rulesStyles = require('./stylelintrc.json');
 
 const paths = {
 	src: {
@@ -134,6 +137,20 @@ gulp.task('eslint', () => {
 		.pipe (eslint(rulesScripts))
 		.pipe(eslint.format())
 })
+
+gulp.task('stylelint', () => {
+	gulp.src(paths.src.styles)
+		.pipe(postcss([
+			stylelint(rulesStyles),
+			reporter({
+				clegarMessages:true,
+				throwError: false
+			})
+
+			]))
+})
+
+gulp.task('lint', ['eslint', 'stylelint']);
 
 gulp.task('cssMove-watch', ['cssMove'], () => browserSync.reload());
 gulp.task('jsMove-watch', ['jsMove'], () => browserSync.reload());
