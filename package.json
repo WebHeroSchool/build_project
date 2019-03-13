@@ -9,7 +9,8 @@
     "create": "mkdir build",
     "delete": "rmdir build",
     "start": "gulp dev",
-    "build": "gulp prod"
+    "build": "gulp prod",
+    "postinstall": "gulp build"
   },
   "pre-push": [
     "test"
