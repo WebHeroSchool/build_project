@@ -20,27 +20,30 @@ const handlebars = require('gulp-compile-handlebars');
 const eslint = require('gulp-eslint');
 const stylelint = require('stylelint');
 const reporter = require('postcss-reporter');
+const filter = require('gulp-filter');
 
-const templateContext = require('./templates/test.json');
+const templateContext = require('./src/templates/test.json');
 const rulesScripts = require('./eslintrc.json');
 const rulesStyles = require('./stylelintrc.json');
 
 const paths = {
 	src: {
-		dir: 'templates',
-		styles: '*.css',
-		scripts: '*.js'
+		dir: 'src/templates',
+		styles: 'src/**/*.css',
+		scripts: 'src/**/*.js'
 	},
 	build: {
 		build: 'build',
 		styles: 'build/style',
-		scripts: 'build/script'
+		scripts: 'build/script',
+		fonts: 'build/fonts',
+		images: 'build/img'
 	},
 	buildName: {
 		styles: 'index.min.css',
 		scripts: 'index.min.js'
 	},
-	templates: 'templates/**/*.hbs',
+	templates: 'src/templates/**/*.hbs',
 	lint: {
 		scripts: ['*.js', '!node_modules/**/*', '!build/**/*']
 	}
@@ -49,11 +52,6 @@ const paths = {
 env({
   file: '.env',
   type: 'ini',
-});
-
-gulp.task('time', () => {
-	let today = new Date(); 
-	console.log(today);
 });
 
 gulp.task('compile', () => {
@@ -114,23 +112,41 @@ gulp.task('cssMove', () => {
 		.pipe(gulp.dest(paths.build.styles));
 });
 
+gulp.task('fontsMove', () => {
+    gulp.src('./src/fonts/**/*')
+        .pipe(filter(['*.woff', '*.woff2']))
+        .pipe(gulp.dest(paths.build.fonts));
+});
+
+gulp.task('imgMove', () => {
+    glob('./src/images/**/*', (err, files) => {
+        if (!err) {
+            gulp.src(files)
+                .pipe(gulp.dest(paths.build.images));
+        }
+    });
+});
+
 gulp.task('clean', () => {
 	return gulp.src(paths.build.build, {read: false})
         .pipe(clean());
 });
 
-gulp.task('build', ['jsMove', 'cssMove']);
-
 gulp.task('browser-sync', () => {
     browserSync.init({
         server: {
-            baseDir: './'
+            baseDir: './build'
         }
     });
 
     gulp.watch(paths.src.styles, ['cssMove-watch']);
 	gulp.watch(paths.src.scripts, ['jsMove-watch']);
+	gulp.watch(paths.src.templates, ['compile-watch']);
 });
+
+gulp.task('cssMove-watch', ['cssMove'], () => browserSync.reload());
+gulp.task('jsMove-watch', ['jsMove'], () => browserSync.reload());
+gulp.task('compile-watch', ['compile'], () => browserSync.reload());
 
 gulp.task('eslint', () => {
 	gulp.src(paths.lint.scripts)
@@ -151,9 +167,7 @@ gulp.task('stylelint', () => {
 });
 
 gulp.task('lint', ['eslint', 'stylelint']);
-
-gulp.task('cssMove-watch', ['cssMove'], () => browserSync.reload());
-gulp.task('jsMove-watch', ['jsMove'], () => browserSync.reload());
-
+gulp.task('build', ['jsMove', 'cssMove', 'compile', 'fontsMove', 'imgMove']);
 gulp.task('dev', ['build', 'browser-sync']);
 gulp.task('prod', ['build']);
+
