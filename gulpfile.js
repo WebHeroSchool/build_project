@@ -97,7 +97,6 @@ gulp.task('cssMove', () => {
 		nested, 
 		postcssShort,
 		assets({
-      	loadPaths: ['images/']
    		}),
    		postcssPresetEnv,
    		autoprefixer({browsers: ['last 1 version']})
@@ -114,12 +113,11 @@ gulp.task('cssMove', () => {
 
 gulp.task('fontsMove', () => {
     gulp.src('./src/fonts/**/*')
-        .pipe(filter(['*.woff', '*.woff2']))
         .pipe(gulp.dest(paths.build.fonts));
 });
 
 gulp.task('imgMove', () => {
-    glob('./src/images/**/*', (err, files) => {
+    glob('./src/img/**/*', (err, files) => {
         if (!err) {
             gulp.src(files)
                 .pipe(gulp.dest(paths.build.images));
