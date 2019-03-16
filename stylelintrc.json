@@ -3,7 +3,7 @@
 		"color-no-invalid-hex": [true, {"message": "hex неправильный"}],
 		"declaration-no-important": [true, {"message": "no important!"}],
 		"no-extra-semicolons": [true, {"message": "Две точки с запятой подряд"}],
-		"indentation": [2, {"message": "Нужно использовать два пробела"}],
+		"indentation": ["tab", {"message": "Нужно использовать tab"}],
 		"selector-type-no-unknown": [true, {"message": "Такого селектора нет"}],
 		"selector-pseudo-class-no-unknown": [true, {"message": "Такого псевдокласса нет"}],
 		"no-missing-end-of-source-newline": [true, {"message": "Любой файл должен заканчиваться пустой строкой"}],

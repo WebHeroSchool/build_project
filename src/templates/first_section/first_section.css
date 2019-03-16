@@ -1,0 +1,139 @@
+.intro {
+	background-image: inline(../img/tesla-and-title.jpg);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.intro__header {
+	font-weight: 600;
+	font-size: 90px;
+	line-height: 110px;
+	text-align: center;
+	margin: 0;
+	margin-top: 55px;
+	margin-bottom: 0;
+}
+
+.intro__paragraph {
+	font-weight: 500;
+	font-size: 15px;
+	line-height: 18px;
+	text-align: center;
+	margin: 0;
+	margin-bottom: 504px;
+}
+
+.intro__footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.intro__speed {
+	margin-right: 82px;
+	width: 154px;
+}
+
+.intro__speed:before {
+	content: url(../img/speed.png);
+}
+
+.intro__road:before {
+	content: url(../img/road.png);
+}
+
+.intro__road {
+	margin-right: 105px;
+	width: 142px;
+}
+
+.intro__drive {
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+	font-size: 13px;
+	line-height: 16px;
+	text-transform: uppercase;
+	margin-right: 35px;
+}
+
+.intro__drive:before {
+	content: "";
+	display: block;
+	width: 22px;
+	height: 22px;
+	background-image: inline(../img/wheel.png);
+	margin-right: 8px;
+}
+
+.intro__drive:hover:before {
+	background-image: inline(../img/wheel-hover.png);
+	cursor: pointer;
+}
+
+.intro__drive:hover {
+	color: #E51937;
+}
+
+.intro__button {
+	margin-top: 10px;
+}
+
+.go-to-footer {
+	display: block;
+	background-image: inline(../img/vector.png);
+	width: 34px;
+	height: 20px;
+	margin-left: 49%;
+	margin-top: 34px;
+	margin-bottom: 36px;
+}
+
+@media (max-width: 1024px) {
+	.intro__header {
+		font-size: 50px;
+		line-height: 61px;
+	}
+
+	.intro__paragraph {
+		font-size: 10px;
+		line-height: 12px;
+		margin-bottom: 400px;
+	}
+
+	.intro__footer {
+		padding-right: 10px;
+		padding-left: 10px;
+	}
+}
+
+@media (max-width: 768px) {
+	.intro__paragraph {
+		margin-bottom: 300px;
+	}
+
+	.intro__speed {
+		margin: auto;
+	}
+
+	.intro__road {
+		margin: auto;
+	}
+
+	.intro__drive {
+		margin: auto;
+		margin-top: 20px;
+	}
+
+	.intro__button {
+		margin: auto;
+	}
+}
+
+@media (max-width: 550px) {
+	.intro__paragraph {
+		margin-bottom: 226px;
+	}
+}
